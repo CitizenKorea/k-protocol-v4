@@ -120,3 +120,43 @@ if st.button(t["btn"], type="primary"):
         for y, p in zip(years_array, illusions):
             c_actual = C_K - (y * DECAY_RATE_PER_YEAR)
             st.text(f"[{t['year']} {y:>3}] {t['actual_c']}: {c_actual:,.5f} m/s  |  {t['phantom']}: +{p:.4f} m")
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+
+st.title("🔬 K-PROTOCOL: 양자 얽힘 & 벨의 부등식 시뮬레이션")
+st.markdown("""
+주류 양자역학은 얽힘을 '확률의 붕괴'로 보지만, **K-PROTOCOL**은 이를 **단일 $\pi$-매트릭스 꼬임($\mathbf{T}$)의 직교 투영**으로 해석합니다.
+""")
+
+# 두 측정기 사이의 각도 (0 ~ 360도)
+theta = np.linspace(0, 2 * np.pi, 500)
+
+# 1. 고전적 숨은 변수 이론 (입자가 떨어져 있다고 가정할 때의 선형적 한계)
+# (Bell's Inequality Limit)
+classical_correlation = 1 - (2 * theta / np.pi)
+classical_correlation = np.where(classical_correlation < -1, -2 - classical_correlation, classical_correlation)
+
+# 2. K-PROTOCOL 기하학적 투영 (양자역학의 관측 결과와 완벽 일치)
+# 하나의 매듭(T)이 3차원 공간에서 투영될 때 나타나는 위상 기하학적 코사인 곡선
+k_protocol_correlation = -np.cos(theta)
+
+# 그래프 시각화
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(theta, classical_correlation, 'b--', linewidth=2, label="고전적 한계 (Bell's Limit)")
+ax.plot(theta, k_protocol_correlation, 'r-', linewidth=3, label="K-PROTOCOL 투영 곡선 (실제 양자 얽힘 데이터)")
+
+ax.axhline(0, color='black', linewidth=0.8)
+ax.set_title("Quantum Entanglement: K-PROTOCOL Geometric Projection", fontsize=14, fontweight='bold')
+ax.set_xlabel("측정기 사이의 각도 차이 θ (Radians)", fontsize=12)
+ax.set_ylabel("상관관계 (Correlation)", fontsize=12)
+ax.legend(fontsize=10)
+ax.grid(True, linestyle='--', alpha=0.6)
+
+st.pyplot(fig)
+
+st.markdown("""
+**결과 분석:**  
+붉은색 곡선(K-PROTOCOL)은 벨의 부등식(푸른색 점선)을 뚫고 나갑니다. 이는 신이 주사위 놀이를 해서가 아니라, **입자 A와 B가 $\pi$-매트릭스의 단일한 위상 매듭(동일한 기하학적 실체)을 공유하고 있기 때문에 발생하는 필연적인 기하학적 투영(Cos $\\theta$) 현상**임을 증명합니다.
+""")
