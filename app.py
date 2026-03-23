@@ -121,10 +121,6 @@ if st.button(t["btn"], type="primary"):
             c_actual = C_K - (y * DECAY_RATE_PER_YEAR)
             st.text(f"[{t['year']} {y:>3}] {t['actual_c']}: {c_actual:,.5f} m/s  |  {t['phantom']}: +{p:.4f} m")
 
-import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-
 st.title("🔬 K-PROTOCOL: 양자 얽힘 & 벨의 부등식 시뮬레이션")
 st.markdown("""
 주류 양자역학은 얽힘을 '확률의 붕괴'로 보지만, **K-PROTOCOL**은 이를 **단일 $\pi$-매트릭스 꼬임($\mathbf{T}$)의 직교 투영**으로 해석합니다.
